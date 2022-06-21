@@ -73,20 +73,22 @@ const onDragEnd = (result, columns, setColumns) => {
 
 function App() {
   const [columns, setColumns] = useState(columnsFromBackend);
-  const btnstyle = { margin :'0 800px !importatnt', width: 300};
+  const btnstyle = { marginRight :'50px', width: 300};
 
 
  //========================================================================================================================================================================
   //========================================================================================================================================================================
 
   const handleSave = (e)=>{
+    e.preventDefault();
     console.log(columns)
   }
 //========================================================================================================================================================================
-  const handleviewTask = (itemId)=>{
-    console.log(itemId)
-  }
-  //========================================================================================================================================================================
+const handleViewAll = (e)=>{
+  e.preventDefault();
+  
+}
+   //========================================================================================================================================================================
 
 
   return (
@@ -131,7 +133,6 @@ function App() {
                               key={item.id}
                               draggableId={item.id}
                               index={index}
-                              onClick={()=>handleviewTask(item.id)}
                             >
                               {(provided, snapshot) => {
                                 return (
@@ -157,8 +158,8 @@ function App() {
                                   </div>
                                 );
                               }}
-                              </Draggable>
                               
+                              </Draggable>
                             
                              
                               </div>
@@ -179,13 +180,19 @@ function App() {
       </DragDropContext>
       
     </div>
-    <div style={{justifyContent: "center", margin: '10px 38%'}}>
+    <div style={{justifyContent: "center", margin: '10px 20%', display:"flex"}}>
     <Button  type="submit"
           color="primary"
           variant="contained"
           style={btnstyle}
           onClick= {handleSave}
           > Save</Button>
+    <Button  type="submit"
+          color="primary"
+          variant="contained"
+          style={btnstyle}
+          onClick= {handleViewAll}
+          > View All</Button>
     </div>
     
     </>

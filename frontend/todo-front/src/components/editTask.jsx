@@ -10,8 +10,8 @@ import {
   InputLabel,
 } from "@material-ui/core";
 import { SelectChangeEvent } from "@material-ui/core/Select";
-import React, { useEffect, useState } from "react";
-import { DatePicker } from "@material-ui/pickers";
+import React, { useEffect, useState, Fragment } from "react";
+import { KeyboardDatePicker } from "@material-ui/pickers";
 
 import Axios from "axios";
 
@@ -23,8 +23,6 @@ const EditTask = () => {
     margin: "0 auto",
   };
   const headerStyle = { margin: 0 };
-  const avatarStyle = { backgroundColor: "#1bbd7e" };
-  const btnstyle = { margin: "8px 0" };
   //========================================================================================================================================================================
   //========================================================================================================================================================================
 
@@ -32,13 +30,12 @@ const EditTask = () => {
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState(0);
   const [status, setStatus] = useState(0);
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
 
-
-  useEffect(()=>{
-    console.log(priority)
-  },[priority])
+  useEffect(() => {
+    console.log(endDate,startDate);
+  }, [startDate, endDate]);
 
   return (
     <Grid>
@@ -109,8 +106,23 @@ const EditTask = () => {
             <MenuItem value={1}>in progress</MenuItem>
             <MenuItem value={2}>completed</MenuItem>
           </Select>
+          <KeyboardDatePicker
+            placeholder="yyyy/MM/dd"
+            onChange={(date) => setStartDate(date)}
+            format="yyyy/MM/dd"
+            style={{width: '45%', marginRight: '5%'}}
+            label= "Start Date"
 
-          <Button type="submit" variant="contained" color="primary">
+          />
+          <KeyboardDatePicker
+            placeholder="yyyy/MM/dd"
+            onChange={(date) => setEndDate(date)}
+            format="yyyy/MM/dd"
+            style={{width: '45%'}}
+            label= "End Date"
+          />
+
+          <Button type="submit" variant="contained" color="primary" fullWidth style={{marginTop: '5%'}}>
             Sign up
           </Button>
         </form>
