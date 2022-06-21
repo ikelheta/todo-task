@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import ViewTask from './viewTask'
 
-const viewall = () => {
-    const[tasks, setTasks]= useState([])
+const ViewAll = () => {
+const[tasks, setTasks]= useState([{_id:1}, {_id:2}, {_id:3} , {_id:4} , {_id:5}])
   return (
     <div>
         {tasks.map((task)=>{
@@ -12,4 +12,4 @@ const viewall = () => {
   )
 }
 
-export default viewall
+export default ViewAll

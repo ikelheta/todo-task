@@ -18,17 +18,18 @@ export default function DenseAppBar() {
 
   const handleClick = ()=>{
     localStorage.clear()
-    navigate('/registrastion')
+    navigate('/')
   }
+ 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar variant="dense" style={{display:'flex', justifyContent:'space-between'}}>
-         <CustomizedDialogs tittle = {"New Task"}>
+         {localStorage.getItem('token') && <CustomizedDialogs tittle = {"New Task"}>
          <EditTask editMode={false} />
-         </CustomizedDialogs>
-         {localStorage.getItem('token') && <Button >Log out</Button>} 
-         <Button variant='contained' color='primary' onClick={handleClick}>Log out</Button>
+         </CustomizedDialogs>}
+         {localStorage.getItem('token') && <Button variant='contained' color='primary' onClick={handleClick}>Log out</Button>} 
+         
         </Toolbar>
       </AppBar>
     </Box>

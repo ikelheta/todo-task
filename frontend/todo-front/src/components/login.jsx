@@ -3,6 +3,7 @@ import { Grid, Paper, Avatar, TextField, Button } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { useState } from "react";
 import Axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = ({ handleChange }) => {
   const paperStyle = {
@@ -15,24 +16,29 @@ const Login = ({ handleChange }) => {
   const btnstyle = { margin: "8px 0" };
   //========================================================================================================================================================================
   //========================================================================================================================================================================
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [token , setToken] = useState('')
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   //========================================================================================================================================================================
+  const navigate = useNavigate();
   //========================================================================================================================================================================
-  const handleSubmit = (e)=>{
-    if(email && password){
-        e.preventDefault()
-        Axios.get('https://jsonplaceholder.typicode.com/todos/1').then((res)=>{
-            if(res.status === 200){
-                setToken(res.data.token)
-            }
-        }).catch((e)=>{
-            console.log(e);
+  const handleSubmit = (e) => {
+    console.log(email, password);
+    if (email && password) {
+
+      e.preventDefault();
+      Axios.get('https://jsonplaceholder.typicode.com/todos/1')
+        .then((res) => {
+          console.log(res);
+          if (res.status === 200) {
+            localStorage.setItem("token", res.data.token);
+            navigate("/editstatus");
+          }
         })
+        .catch((e) => {
+          console.log(e);
+        });
     }
-  
-  }
+  };
   return (
     <Grid>
       <Paper style={paperStyle}>
@@ -42,13 +48,20 @@ const Login = ({ handleChange }) => {
           </Avatar>
           <h2>Sign In</h2>
         </Grid>
-        <TextField label="Email" placeholder="Enter Email" fullWidth required />
+        <TextField
+          label="Email"
+          placeholder="Enter Email"
+          fullWidth
+          required
+          onChange={(e) => setEmail(e.target.value)}
+        />
         <TextField
           label="Password"
           placeholder="Enter password"
           type="password"
           fullWidth
           required
+          onChange={(e) => setPassword(e.target.value)}
         />
         <Button
           type="submit"

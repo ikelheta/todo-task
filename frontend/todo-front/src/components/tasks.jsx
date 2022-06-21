@@ -1,6 +1,7 @@
 import { Button } from "@material-ui/core";
 import React, { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { useNavigate } from "react-router-dom";
 import uuid from "uuid/v4";
 
 const itemsFromBackend = [
@@ -74,6 +75,8 @@ function App() {
   const [columns, setColumns] = useState(columnsFromBackend);
   const btnstyle = { marginRight :'50px', width: 300};
 
+  const navigate = useNavigate()
+
 
  //========================================================================================================================================================================
   //========================================================================================================================================================================
@@ -85,6 +88,7 @@ function App() {
 //========================================================================================================================================================================
 const handleViewAll = (e)=>{
   e.preventDefault();
+  navigate('all')
   
 }
    //========================================================================================================================================================================
@@ -191,7 +195,7 @@ const handleViewAll = (e)=>{
           variant="contained"
           style={btnstyle}
           onClick= {handleViewAll}
-          > View All</Button>
+          > View Details</Button>
     </div>
     
     </>

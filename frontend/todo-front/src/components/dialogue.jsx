@@ -74,7 +74,7 @@ export default function CustomizedDialogs(props) {
       </Button>
       <Dialog aria-labelledby="customized-dialog-title" open={open}>
         <DialogTitle id="customized-dialog-title" onClose={handleClose} >
-        {props.tittle && "Add"  || "Save"}
+        {props.tittle }
         </DialogTitle>
         <DialogContent dividers>
           {props.children}

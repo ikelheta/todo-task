@@ -43,7 +43,7 @@ const EditTask = (props) => {
     <Grid>
       <Paper style={paperStyle}>
         <Grid align="center">
-          <h2 style={headerStyle}>New Task</h2>
+          <h2 style={headerStyle}>{props.editMode && "Edit Task" || "Add New Task"}</h2>
           <Typography variant="caption" >
            {props.editMode && "edit Task and save !" }
           </Typography>

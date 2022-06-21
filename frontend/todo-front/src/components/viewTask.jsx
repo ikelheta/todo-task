@@ -8,18 +8,27 @@ import Typography from '@material-ui/core/Typography';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Axios from 'axios';
+import EditTask from './editTask';
+import CustomizedDialogs from './dialogue';
 
 
 
 
 
-export default function ViewTask({id}) {
+
+export default function ViewTask(props) {
     const btnstyle = { margin: "8px 7.5px" };
 
-    const test = {title : 'test title', status: "in progress", priority: 'high', startDate: '1-12-2022', endDate: '1-12-2023'}
+    const test = {title : 'test title', status: "in progress", priority: 'high', startDate: '1-12-2022', endDate: '1-12-2023', _id: 'ssdcdfvdfvzcdsc'}
 
+    const [task, setTask]= useState({})
+   
+
+
+
+  
     useEffect(()=>{
-        Axios.get(`url/${id}`).then((res)=>{
+        Axios.get(`url/${props.id}`).then((res)=>{
             if(res.status === 200){
                 setTask(res.data)
             }
@@ -29,13 +38,15 @@ export default function ViewTask({id}) {
         })
     },[])
 
-    const [task, setTask]= useState({})
+    const handleDelete = ()=>{
+        console.log(props._id)
+    }
 
 
     
   return (
-    <div style={{display: 'flex',  justifyContent:'center', alignItems:'center', height: '100vh'}}>
-    <Card style={{ minWidth: 1000 , minHeight:300}}>
+    <div style={{display: 'flex', marginTop: 14}}>
+    <Card style={{width: "100vw"}}>
       <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom variant="h5" component="div">
           {task.title || 'Tittle'}
@@ -57,8 +68,10 @@ export default function ViewTask({id}) {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button variant='contained' color='primary' style={btnstyle} >Edit   <EditIcon></EditIcon></Button>
-        <Button variant='contained' color='secondary' style={btnstyle} >Delete   <DeleteIcon></DeleteIcon> </Button>
+      {localStorage.getItem('token') && <CustomizedDialogs tittle = {"Edit Task"}>
+         <EditTask editMode={true} />
+         </CustomizedDialogs>}
+        <Button variant='contained' color='secondary' style={btnstyle} onClick={handleDelete} >Delete   <DeleteIcon></DeleteIcon> </Button>
       </CardActions>
     </Card>
     </div>
