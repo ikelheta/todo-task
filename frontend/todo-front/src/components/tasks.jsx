@@ -1,7 +1,6 @@
 import { Button } from "@material-ui/core";
 import React, { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import VisibilityIcon from '@material-ui/icons/Visibility';
 import uuid from "uuid/v4";
 
 const itemsFromBackend = [

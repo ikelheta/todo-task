@@ -1,25 +1,15 @@
-import {
-  Grid,
-  MenuItem,
-  Paper,
-  Select,
-  TextField,
-  Typography,
-  Button,
-  Avatar,
-  InputLabel,
-} from "@material-ui/core";
-import { SelectChangeEvent } from "@material-ui/core/Select";
-import React, { useEffect, useState, Fragment } from "react";
+import {Grid, MenuItem, Paper, Select, TextField, Typography, Button, InputLabel } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
 import { KeyboardDatePicker } from "@material-ui/pickers";
+import { useParams } from 'react-router-dom';
 
-import Axios from "axios";
 
-const EditTask = () => {
+
+const EditTask = (props) => {
   const paperStyle = {
     padding: 20,
-    height: "73vh",
-    width: 700,
+    height: 490,
+    width: '400px',
     margin: "0 auto",
   };
   const headerStyle = { margin: 0 };
@@ -33,17 +23,29 @@ const EditTask = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
+  const { id } = useParams();
+
+
+  console.log(title, description, startDate, endDate)
   useEffect(() => {
-    console.log(endDate,startDate);
-  }, [startDate, endDate]);
+    if(id && props.editMode){
+        
+
+    }
+  }, [id, props.editMode]);
+
+
+  const handleSubmit = (e)=>{
+
+  }
 
   return (
     <Grid>
       <Paper style={paperStyle}>
         <Grid align="center">
-          <h2 style={headerStyle}>Sign Up</h2>
-          <Typography variant="caption" gutterBottom>
-            Please fill this form to create an account !
+          <h2 style={headerStyle}>New Task</h2>
+          <Typography variant="caption" >
+           {props.editMode && "edit Task and save !" }
           </Typography>
         </Grid>
         <form>
@@ -53,7 +55,7 @@ const EditTask = () => {
             placeholder="Title"
             required
             onChange={(e) => setTitle(e.target.value)}
-            gutterBottom
+            
           />
           <TextField
             fullWidth
@@ -122,8 +124,8 @@ const EditTask = () => {
             label= "End Date"
           />
 
-          <Button type="submit" variant="contained" color="primary" fullWidth style={{marginTop: '5%'}}>
-            Sign up
+          <Button type="submit" variant="contained" color="primary" fullWidth style={{marginTop: '5vh'}} onClick={(e)=> handleSubmit(e)}>
+            {props.editMode && "save" || "Add"}
           </Button>
         </form>
       </Paper>
