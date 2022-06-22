@@ -22,23 +22,50 @@ const Login = ({ handleChange }) => {
   const navigate = useNavigate();
   //========================================================================================================================================================================
   const handleSubmit = (e) => {
-    console.log(email, password);
     if (email && password) {
 
       e.preventDefault();
-      Axios.get('https://jsonplaceholder.typicode.com/todos/1')
+      const data = { email, password }
+      Axios.post('http://localhost:3000/user/login', data)
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
             localStorage.setItem("token", res.data.token);
             navigate("/editstatus");
           }
+
+
         })
         .catch((e) => {
+          if (e.response.status === 400) {
+            alert('user Name or password wrong')
+          }
+          if (e.response.status === 401) {
+            alert('please verify you mail first')
+          }
+
           console.log(e);
         });
     }
   };
+
+  //========================================================================================================================================================================
+  const handleReset = (e) => {
+    console.log('reset');
+    if (email) {
+      e.preventDefault();
+      Axios.post('http://localhost:3000/reset/user', { email }).then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          alert('reset link sent to you')
+        }
+      }).catch((e) => {
+        alert('some thing went wrong')
+      })
+    }
+
+
+  }
   return (
     <Grid>
       <Paper style={paperStyle}>
@@ -72,6 +99,15 @@ const Login = ({ handleChange }) => {
           onClick={handleSubmit}
         >
           Sign in
+        </Button>
+        <Button
+          type="submit"
+          color="primary"
+          style={btnstyle}
+          fullWidth
+          onClick={handleReset}
+        >
+          reset password for current email
         </Button>
       </Paper>
     </Grid>

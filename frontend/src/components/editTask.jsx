@@ -1,4 +1,4 @@
-import {Grid, MenuItem, Paper, Select, TextField, Typography, Button, InputLabel } from "@material-ui/core";
+import { Grid, MenuItem, Paper, Select, TextField, Typography, Button, InputLabel } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { useParams } from 'react-router-dom';
@@ -17,49 +17,66 @@ const EditTask = (props) => {
   };
   const headerStyle = { margin: 0 };
   //========================================================================================================================================================================
-  //========================================================================================================================================================================
+
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState(0);
-  const [priorityList, setPriorityList] = useState([]);
-  const [status, setStatus] = useState(0);
-  const [statusList, setStatusList] = useState([])
+  const [priorityList, setPriorityList] = useState(['Low', 'Medium', 'High']);
+  const [status, setStatus] = useState('');
+  const [statusList, setStatusList] = useState(['TODO', 'IN Progress', 'Under Review', 'Rework', 'Completed'])
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
   const { id } = useParams();
 
 
-  useEffect(() => {
-    Axios.get('').then((res)=>{
-        setPriorityList(res.data.priority)
-        setStatusList(res.data.status)
-    }).catch((e)=>{
-        console.log(e)
-    })
-   
-  }, []);
 
 
-  const handleSubmit = (e)=>{
-  const data ={title, description, priority, status, startDate, endDate } 
-  Axios.post('', data).then((res)=>{
-    console.log(res.data)
-  }).catch((e)=>{
-    e.preventDefault();
-    alert('some thing went wrong')
-    
-  })
-    
-   
+  const handleSubmit = (e) => {
+
+    const data = { title, description, priority, status, startDate, endDate }
+    if (!props.editMode) {
+      Axios.post('http://localhost:3000/task/add', data).then((res) => {
+        console.log(res.data)
+      }).catch((e) => {
+        alert('some thing went wrong in add')
+
+      })
+    } else {
+      Axios.put(`http://localhost:3000/task/update/${props.id}`, data).then((res) => {
+        console.log(res.data);
+      }).catch((e) => {
+        alert('some thing went wrong in edit')
+      })
+    }
   }
+  //========================================================================================================================================================================
+
   const AddNotify = () => {
     toast("succesfully added ");
     toast.success("succesfully added  ", {
-        position: toast.POSITION.BOTTOM_RIGHT
-      });
+      position: toast.POSITION.BOTTOM_RIGHT
+    });
+  }
+
+  useEffect(() => {
+    console.log(props);
+    if (props.editMode) {
+      console.log("object");
+      Axios.get(`http://localhost:3000/task/find/${props.id}`).then((res) => {
+        console.log(res.data);
+        const { title, description, endDate, startDate, priority, status } = res.data
+        setDescription(description)
+        setEndDate(endDate)
+        setPriority(priority)
+        setStartDate(startDate)
+        setStatus(status)
+        setTitle(title)
+      })
     }
+
+  }, [])
 
   return (
     <Grid>
@@ -67,7 +84,7 @@ const EditTask = (props) => {
         <Grid align="center">
           <h2 style={headerStyle}>{props.editMode && "Edit Task" || "Add New Task"}</h2>
           <Typography variant="caption" >
-           {props.editMode && "edit Task and save !" }
+            {props.editMode && "edit Task and save !"}
           </Typography>
         </Grid>
         <form>
@@ -77,7 +94,7 @@ const EditTask = (props) => {
             placeholder="Title"
             required
             onChange={(e) => setTitle(e.target.value)}
-            
+            value={title}
           />
           <TextField
             fullWidth
@@ -86,6 +103,7 @@ const EditTask = (props) => {
             required
             onChange={(e) => setDescription(e.target.value)}
             style={{ marginBottom: "15px" }}
+            value={description}
           />
           <InputLabel
             id="demo-simple-select-label"
@@ -105,15 +123,13 @@ const EditTask = (props) => {
             style={{ marginBottom: "30px" }}
             value={priority}
           >
-            <MenuItem value={0}>low</MenuItem>
-            <MenuItem value={1}>medium</MenuItem>
-            <MenuItem value={2}>high</MenuItem>
+
             {
-                priorityList.map((ele, index)=>{
-                    return (
-                        <MenuItem key={index} value={ele}>{ele}</MenuItem>
-                    )
-                })
+              priorityList.map((ele, index) => {
+                return (
+                  <MenuItem key={index} value={ele}>{ele}</MenuItem>
+                )
+              })
             }
           </Select>
           <InputLabel
@@ -133,32 +149,33 @@ const EditTask = (props) => {
             style={{ marginBottom: "30px" }}
             value={status}
           >
-            <MenuItem value={0}>todo</MenuItem>
-            <MenuItem value={1}>in progress</MenuItem>
-            <MenuItem value={2}>completed</MenuItem>
-          {statusList.map((ele, index)=>{
-            return (
-                <MenuItem key= {index} value={ele}>{ele}</MenuItem>
-            )
-          })}
+
+            {statusList.map((ele, index) => {
+              return (
+                <MenuItem key={index} value={ele}>{ele}</MenuItem>
+              )
+            })}
           </Select>
           <KeyboardDatePicker
             placeholder="yyyy/MM/dd"
             onChange={(date) => setStartDate(date)}
             format="yyyy/MM/dd"
-            style={{width: '45%', marginRight: '5%'}}
-            label= "Start Date"
+            style={{ width: '45%', marginRight: '5%' }}
+            label="Start Date"
+            value={startDate}
+
 
           />
           <KeyboardDatePicker
             placeholder="yyyy/MM/dd"
+            value={endDate}
             onChange={(date) => setEndDate(date)}
             format="yyyy/MM/dd"
-            style={{width: '45%'}}
-            label= "End Date"
+            style={{ width: '45%' }}
+            label="End Date"
           />
 
-          <Button type="submit" variant="contained" color="primary" fullWidth style={{marginTop: '5vh'}} onClick={(e)=> handleSubmit(e)}>
+          <Button type="submit" variant="contained" color="primary" fullWidth style={{ marginTop: '5vh' }} onClick={(e) => handleSubmit(e)}>
             {props.editMode && "save" || "Add"}
           </Button>
         </form>

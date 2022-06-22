@@ -7,7 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 const Signup = () => {
-    const paperStyle = { padding: 20, width: 700, margin: "0 auto", height: "73vh",}
+    const paperStyle = { padding: 20, width: 700, margin: "0 auto", height: "73vh", }
     const headerStyle = { margin: 0 }
     const avatarStyle = { backgroundColor: '#1bbd7e' }
     const marginTop = { marginTop: 5 }
@@ -19,16 +19,16 @@ const Signup = () => {
     const [alertbool, setAlert] = useState(false)
     //========================================================================================================================================================================
     //========================================================================================================================================================================
-    const handleSubmit = (e)=>{
-        if( name && email && password){
+    const handleSubmit = (e) => {
+        if (name && email && password) {
             e.preventDefault()
-            Axios.get('https://jsonplaceholder.typicode.com/todos/1').then((res)=>{
-                if(res.status === 200){
+            Axios.post('http://localhost:3000/user/register', { name, email, password }).then((res) => {
+                if (res.status === 200) {
                     console.log('created please verifiy your mail')
                     console.log(res.data)
                     setAlert(true)
                 }
-            }).catch((e)=>{
+            }).catch((e) => {
                 console.log(e);
             })
         }
@@ -46,16 +46,16 @@ const Signup = () => {
                     <Typography variant='caption' gutterBottom>Please fill this form to create an account !</Typography>
                 </Grid>
                 <form>
-                    <TextField fullWidth label='Name' placeholder="Enter your name"  required onChange={(e)=>setName(e.target.value) }/>
-                    <TextField fullWidth label='Email' placeholder="Enter your email"  required onChange={(e)=>setEmail(e.target.value) }/>
-                    <TextField fullWidth label='Password' placeholder="Enter your password" required onChange={(e)=>setPassword(e.target.value) }/>
+                    <TextField fullWidth label='Name' placeholder="Enter your name" required onChange={(e) => setName(e.target.value)} />
+                    <TextField fullWidth label='Email' placeholder="Enter your email" required onChange={(e) => setEmail(e.target.value)} />
+                    <TextField fullWidth label='Password' placeholder="Enter your password" required onChange={(e) => setPassword(e.target.value)} />
                     <Button type='submit' variant='contained' color='primary' style={marginTop} onClick={handleSubmit}>Sign up</Button>
                 </form>
-            </Paper >  || <Paper align = 'center'>
-                <h3>please verify you mail</h3>
-            </Paper>
+            </Paper > || <Paper align='center'>
+                    <h3>please verify you mail</h3>
+                </Paper>
             }
-    
+
         </Grid>
     )
 }
