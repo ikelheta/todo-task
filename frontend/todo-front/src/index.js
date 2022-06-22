@@ -9,7 +9,7 @@ import axios from "axios"
 
 axios.interceptors.request.use((request)=>{
   request.headers.Authorizations = ''
-  const token = localStorage.getItem('Token')
+  const token = localStorage.getItem('token')
   if(token){
   request.headers.Authorizations= `Bearer ${token}`
 }
@@ -18,11 +18,9 @@ return request
 
 ReactDOM.render(
   <MuiPickersUtilsProvider utils={DateFnsUtils}>
-    <React.StrictMode>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </React.StrictMode>
   </MuiPickersUtilsProvider>,
   document.getElementById("root")
 );

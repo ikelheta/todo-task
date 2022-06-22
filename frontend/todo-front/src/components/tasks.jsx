@@ -131,7 +131,7 @@ const handleViewAll = (e)=>{
                           console.log(item)
                           return (
                             <>
-                            <div style={{ display: "flex", width: '100%' }}>
+                            <div style={{ display: "flex", width: '100%' }} key={index}>
                             <Draggable
                               key={item.id}
                               draggableId={item.id}

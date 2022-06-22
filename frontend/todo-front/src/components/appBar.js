@@ -18,7 +18,7 @@ export default function DenseAppBar() {
 
   const handleClick = ()=>{
     localStorage.clear()
-    navigate('/')
+    navigate('')
   }
  
   return (

@@ -2,6 +2,9 @@ import {Grid, MenuItem, Paper, Select, TextField, Typography, Button, InputLabel
 import React, { useEffect, useState } from "react";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { useParams } from 'react-router-dom';
+import Axios from "axios";
+import { toast } from 'react-toastify';
+
 
 
 
@@ -19,25 +22,44 @@ const EditTask = (props) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [priority, setPriority] = useState(0);
+  const [priorityList, setPriorityList] = useState([]);
   const [status, setStatus] = useState(0);
+  const [statusList, setStatusList] = useState([])
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
 
   const { id } = useParams();
 
 
-  console.log(title, description, startDate, endDate)
   useEffect(() => {
-    if(id && props.editMode){
-        
-
-    }
-  }, [id, props.editMode]);
+    Axios.get('').then((res)=>{
+        setPriorityList(res.data.priority)
+        setStatusList(res.data.status)
+    }).catch((e)=>{
+        console.log(e)
+    })
+   
+  }, []);
 
 
   const handleSubmit = (e)=>{
-
+  const data ={title, description, priority, status, startDate, endDate } 
+  Axios.post('', data).then((res)=>{
+    console.log(res.data)
+  }).catch((e)=>{
+    e.preventDefault();
+    alert('some thing went wrong')
+    
+  })
+    
+   
   }
+  const AddNotify = () => {
+    toast("succesfully added ");
+    toast.success("succesfully added  ", {
+        position: toast.POSITION.BOTTOM_RIGHT
+      });
+    }
 
   return (
     <Grid>
@@ -86,6 +108,13 @@ const EditTask = (props) => {
             <MenuItem value={0}>low</MenuItem>
             <MenuItem value={1}>medium</MenuItem>
             <MenuItem value={2}>high</MenuItem>
+            {
+                priorityList.map((ele, index)=>{
+                    return (
+                        <MenuItem key={index} value={ele}>{ele}</MenuItem>
+                    )
+                })
+            }
           </Select>
           <InputLabel
             id="demo-simple-select-label"
@@ -107,6 +136,11 @@ const EditTask = (props) => {
             <MenuItem value={0}>todo</MenuItem>
             <MenuItem value={1}>in progress</MenuItem>
             <MenuItem value={2}>completed</MenuItem>
+          {statusList.map((ele, index)=>{
+            return (
+                <MenuItem key= {index} value={ele}>{ele}</MenuItem>
+            )
+          })}
           </Select>
           <KeyboardDatePicker
             placeholder="yyyy/MM/dd"
