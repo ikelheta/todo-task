@@ -31,7 +31,7 @@ const Reset = () => {
         if (res.status === 200) {
           console.log(res.data);
           localStorage.setItem("token", params.token)
-          navigate('/editstatus/all')
+          navigate('/editstatus')
         }
       }).catch((e) => {
         console.log(e);
