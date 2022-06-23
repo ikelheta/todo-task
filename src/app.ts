@@ -175,9 +175,10 @@ app.delete('/task/:id', isTokenValid, (req, res) => {
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 if(process.env.NODE_ENV === "production"){
   let reqFolder = path.join("../" + __dirname )
-  app.use(express.static(reqFolder + '/frontend/build'))
+
+  app.use(express.static(__dirname + '../frontend/build'))
   app.get('*', (req, res)=>{
-    res.sendFile(path.join(reqFolder +'/frontend/build/index.html'))
+    res.sendFile(path.join(__dirname +'../frontend/build/index.html'))
   })
 }else{
   app.get('/', (req, res)=>{
