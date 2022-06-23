@@ -15,17 +15,13 @@ class UserController {
         const user = new User_1.User(body);
         return (0, rxjs_1.of)(user).pipe((0, operators_1.mergeMap)((m) => (0, rxjs_1.from)(bcrypt_1.default.hash(m.password, 10))), (0, operators_1.mergeMap)((m) => (0, rxjs_1.from)(user_1.default.create(Object.assign(Object.assign({}, user), { password: m })))), (0, operators_1.map)((m) => {
             return { token: (0, authontication_1.createUserToken)(m) };
-        }), (0, rxjs_1.tap)((m) => console.log(`http://localhost:3001/verify/${m.token}`))
-        // mergeMap((m) => from(transporter2.sendMail(sendVerification(user.email, `${process.env.HOST}/${m.token}`)))),
-        );
+        }), (0, rxjs_1.tap)((m) => console.log(`http://localhost:3001/confirmation/${m.token}`)));
     }
     //--------------------------------------------------------------------------------------------------------------------------------------------------------
     static sendTokenTouser(email) {
         return (0, rxjs_1.of)(email).pipe((0, operators_1.mergeMap)(() => (0, rxjs_1.from)(user_1.default.findOne({ email }))), (0, operators_1.map)((m) => {
             return { token: (0, authontication_1.createUserToken)(m) };
-        }), (0, rxjs_1.tap)((m) => console.log(`http://localhost:3001/reset/${m.token}`))
-        // mergeMap((m) => from(transporter2.sendMail(sendReset(email, `http://localhost:3001/reset/${m.token}`)))),
-        );
+        }), (0, rxjs_1.tap)((m) => console.log(`http://localhost:3001/reset/${m.token}`)));
     }
     //--------------------------------------------------------------------------------------------------------------------------------------------------------
     static verfieEmail(user) {

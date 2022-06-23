@@ -1,10 +1,10 @@
+import{transporter2, sendVerification, sendReset} from "../notifications/verification"
 import { createUserToken } from './../middleware/authontication';
 import UserSchema from "../db/user"
 import { from, Observable, of, forkJoin, tap } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import bcrypt from "bcrypt"
 import { User } from '../models/User';
-import { sendVerification } from '../notifications/verification';
 
 
 export class UserController {
@@ -17,7 +17,7 @@ export class UserController {
       map((m) => {
         return { token: createUserToken(m) }
       }),
-      tap((m) => console.log(`http://localhost:3001/verify/${m.token}`))
+      tap((m) => console.log(`http://localhost:3000/confirmation/${m.token}`)),
       // mergeMap((m) => from(transporter2.sendMail(sendVerification(user.email, `${process.env.HOST}/${m.token}`)))),
     )
   }
@@ -29,7 +29,7 @@ export class UserController {
       map((m) => {
         return { token: createUserToken(m) }
       }),
-      tap((m) => console.log(`http://localhost:3001/reset/${m.token}`))
+      tap((m) => console.log(`http://localhost:3000/reset/${m.token}`)),
       // mergeMap((m) => from(transporter2.sendMail(sendReset(email, `http://localhost:3001/reset/${m.token}`)))),
     )
   }

@@ -6,15 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.sendReset = exports.sendVerification = exports.transporter2 = void 0;
 const nodemailer_1 = __importDefault(require("nodemailer"));
 exports.transporter2 = nodemailer_1.default.createTransport({
-    service: "hotmail",
+    service: "gmail",
     auth: {
-        user: process.env.NOTIFICATION_USER || "ibrahim.task@outlook.com",
-        pass: process.env.NOTIFICATION_PASS || "Password123456789"
+        user: process.env.NOTIFICATION_USER || "bluedevolopment.task@gmail.com",
+        pass: process.env.NOTIFICATION_PASS || "Hema_123456789"
     }
 });
 function sendVerification(mail, verificationLink) {
     return {
-        from: "ibrahim.task@outlook.com",
+        from: "bluedevolopment.task@gmail.com",
         to: mail,
         subject: `verification code for todo`,
         html: `click this link to veriify <a href="${verificationLink}">${verificationLink}</a> `
@@ -23,7 +23,7 @@ function sendVerification(mail, verificationLink) {
 exports.sendVerification = sendVerification;
 function sendReset(mail, resetLink) {
     return {
-        from: "ibrahim.task@outlook.com",
+        from: "bluedevolopment.task@gmail.com",
         to: mail,
         subject: `reset link`,
         html: `click this link to reset <a href="${resetLink}">${resetLink}</a> `
