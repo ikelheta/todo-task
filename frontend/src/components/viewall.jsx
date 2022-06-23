@@ -6,7 +6,7 @@ import Axios from "axios"
 const ViewAll = () => {
      const [tasks, setTasks] = useState([])
      useEffect(() => {
-          Axios.get('http://localhost:5000/task/findall').then((res) => {
+          Axios.get('https://bluedevolopment-task.herokuapp.com:5000/task/findall').then((res) => {
 
                if (res.status === 200) {
                     setTasks(res.data)

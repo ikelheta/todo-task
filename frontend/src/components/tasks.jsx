@@ -80,7 +80,7 @@ function App() {
 
   const [newItems, setNewItems] = useState([])
   useEffect(() => {
-    Axios.get('http://localhost:5000/task/findall').then((res) => {
+    Axios.get('https://bluedevolopment-task.herokuapp.com:5000/task/findall').then((res) => {
 
       console.log(itemsFromBackend);
 
