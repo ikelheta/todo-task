@@ -191,11 +191,11 @@ if(process.env.NODE_ENV === "production"){
 }
 
 
-const PORT = 8080
+const PORT = process.env.PORT || 8080
 
 const start = async (): Promise<void> => {
   try {
-    await connect(process.env.MONGO_URI || "")
+    await connect(process.env.MONGO_URI || "CONNECTED TO DB")
     app.listen(PORT, () => {
       console.log(`Server started on port ${PORT}`);
     });

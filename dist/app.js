@@ -161,10 +161,10 @@ else {
         res.send('api runnning');
     });
 }
-const PORT = 8080;
+const PORT = process.env.PORT || 8080;
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield (0, mongoose_1.connect)(process.env.MONGO_URI || "");
+        yield (0, mongoose_1.connect)(process.env.MONGO_URI || "CONNECTED TO DB");
         app.listen(PORT, () => {
             console.log(`Server started on port ${PORT}`);
         });
