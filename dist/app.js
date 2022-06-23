@@ -147,10 +147,12 @@ app.delete('/task/:id', authontication_1.isTokenValid, (req, res) => {
 });
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 if (process.env.NODE_ENV === "production") {
-    let reqFolder = path_1.default.join(__dirname, '../../');
-    app.use(express_1.default.static(reqFolder + '/frontend/build'));
+    let reqFolder = path_1.default.join("../" + __dirname);
+    app.use(express_1.default.static(path_1.default.join(__dirname, '../frontend/build')));
     app.get('*', (req, res) => {
-        res.sendFile(path_1.default.join(reqFolder + '/frontend/build/index.html'));
+        const index = path_1.default.join(__dirname, "..", 'frontend', 'build', 'index.html');
+        console.log(index);
+        res.sendFile(index);
     });
 }
 else {

@@ -2,11 +2,11 @@ import express from "express"
 import 'dotenv/config'
 import { connect } from "mongoose"
 import { take } from 'rxjs';
-import { isTokenValid, verifyToken } from './src/middleware/authontication';
-import { UserController } from './src/controller/user';
-import { TaskController } from './src/controller/task';
-import { Task } from './src/models/task';
-import { LoginController } from "./src/controller/login";
+import { isTokenValid, verifyToken } from './middleware/authontication';
+import { UserController } from './controller/user';
+import { TaskController } from './controller/task';
+import { Task } from './models/task';
+import { LoginController } from "./controller/login";
 import path from "path"
 const cors = require("cors")
 const app = express()
@@ -176,10 +176,10 @@ app.delete('/task/:id', isTokenValid, (req, res) => {
 if(process.env.NODE_ENV === "production"){
   let reqFolder = path.join("../" + __dirname )
 
-  app.use(express.static(path.join(__dirname , '/frontend/build')))
+  app.use(express.static(path.join(__dirname , '../frontend/build')))
   app.get('*', (req, res)=>{
     
-    const index =path.join(__dirname , 'frontend', 'build', 'index.html' )
+    const index =path.join(__dirname ,"..", 'frontend', 'build', 'index.html' )
     console.log(index);
     res.sendFile(index)
   })
