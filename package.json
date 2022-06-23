@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsc && nodemon dist/app.js",
     "start": "node dist/app.js",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && cd .. && npm install --prefix frontend && npm run build --prefix frontend"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
