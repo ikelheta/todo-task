@@ -9,7 +9,7 @@ const Confirmation = () => {
   const navigate = useNavigate()
 
   useEffect(() => {
-    Axios.post(`http://localhost:3000/confirmation/${params.token}`).then((res) => {
+    Axios.post(`http://localhost:5000/confirmation/${params.token}`).then((res) => {
       if (res.status === 200) {
         localStorage.setItem('token', res.data.token)
         navigate('/editstatus/all')

@@ -7,6 +7,7 @@ import { UserController } from './controller/user';
 import { TaskController } from './controller/task';
 import { Task } from './models/task';
 import { LoginController } from "./controller/login";
+import path from "path"
 const cors = require("cors")
 const app = express()
 app.use(express.json());
@@ -172,6 +173,17 @@ app.delete('/task/:id', isTokenValid, (req, res) => {
   )
 })
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
+if(process.env.NODE_ENV === "production"){
+  let reqFolder = path.join(__dirname, '../../')
+  app.use(express.static(reqFolder + '/frontend/build'))
+  app.get('*', (req, res)=>{
+    res.sendFile(path.join(reqFolder+'/frontend/build/index.html'))
+  })
+}else{
+  app.get('/', (req, res)=>{
+    res.send('api runnning')
+  })
+}
 
 
 const PORT = process.env.PORT || 3000
@@ -180,7 +192,7 @@ const start = async (): Promise<void> => {
   try {
     await connect(process.env.MONGO_URI || "")
     app.listen(PORT, () => {
-      console.log("Server started on port 3000");
+      console.log(`Server started on port ${PORT}`);
     });
   } catch (error) {
     console.error(error);

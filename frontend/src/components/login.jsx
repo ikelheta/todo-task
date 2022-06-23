@@ -26,7 +26,7 @@ const Login = ({ handleChange }) => {
 
       e.preventDefault();
       const data = { email, password }
-      Axios.post('http://localhost:3000/user/login', data)
+      Axios.post('http://localhost:5000/user/login', data)
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
@@ -54,7 +54,7 @@ const Login = ({ handleChange }) => {
     console.log('reset');
     if (email) {
       e.preventDefault();
-      Axios.post('http://localhost:3000/reset/user', { email }).then((res) => {
+      Axios.post('http://localhost:5000/reset/user', { email }).then((res) => {
         console.log(res);
         if (res.status === 200) {
           alert('reset link sent to you')
@@ -62,6 +62,8 @@ const Login = ({ handleChange }) => {
       }).catch((e) => {
         alert('some thing went wrong')
       })
+    }else{
+      alert('please enter the mail you want to reset')
     }
 
 
@@ -80,10 +82,12 @@ const Login = ({ handleChange }) => {
           placeholder="Enter Email"
           fullWidth
           required
+          typeof="email"
           onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
           label="Password"
+          typeof="password"
           placeholder="Enter password"
           type="password"
           fullWidth

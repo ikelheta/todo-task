@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import { useParams } from 'react-router-dom';
 import Axios from "axios";
-import { toast } from 'react-toastify';
 
 
 
@@ -37,14 +36,14 @@ const EditTask = (props) => {
 
     const data = { title, description, priority, status, startDate, endDate }
     if (!props.editMode) {
-      Axios.post('http://localhost:3000/task/add', data).then((res) => {
+      Axios.post('http://localhost:5000/task/add', data).then((res) => {
         console.log(res.data)
       }).catch((e) => {
         alert('some thing went wrong in add')
 
       })
     } else {
-      Axios.put(`http://localhost:3000/task/update/${props.id}`, data).then((res) => {
+      Axios.put(`http://localhost:5000/task/update/${props.id}`, data).then((res) => {
         console.log(res.data);
       }).catch((e) => {
         alert('some thing went wrong in edit')
@@ -53,18 +52,13 @@ const EditTask = (props) => {
   }
   //========================================================================================================================================================================
 
-  const AddNotify = () => {
-    toast("succesfully added ");
-    toast.success("succesfully added  ", {
-      position: toast.POSITION.BOTTOM_RIGHT
-    });
-  }
+  
 
   useEffect(() => {
     console.log(props);
     if (props.editMode) {
       console.log("object");
-      Axios.get(`http://localhost:3000/task/find/${props.id}`).then((res) => {
+      Axios.get(`http://localhost:5000/task/find/${props.id}`).then((res) => {
         console.log(res.data);
         const { title, description, endDate, startDate, priority, status } = res.data
         setDescription(description)

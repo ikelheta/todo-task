@@ -22,7 +22,7 @@ const Signup = () => {
     const handleSubmit = (e) => {
         if (name && email && password) {
             e.preventDefault()
-            Axios.post('http://localhost:3000/user/register', { name, email, password }).then((res) => {
+            Axios.post('http://localhost:5000/user/register', { name, email, password }).then((res) => {
                 if (res.status === 200) {
                     console.log('created please verifiy your mail')
                     console.log(res.data)

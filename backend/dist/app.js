@@ -21,6 +21,7 @@ const user_1 = require("./controller/user");
 const task_1 = require("./controller/task");
 const task_2 = require("./models/task");
 const login_1 = require("./controller/login");
+const path_1 = __importDefault(require("path"));
 const cors = require("cors");
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
@@ -145,12 +146,24 @@ app.delete('/task/:id', authontication_1.isTokenValid, (req, res) => {
     });
 });
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
+if (process.env.NODE_ENV === "production") {
+    let reqFolder = path_1.default.join(__dirname, '../../');
+    app.use(express_1.default.static(reqFolder + '/frontend/build'));
+    app.get('*', (req, res) => {
+        res.sendFile(path_1.default.join(reqFolder + '/frontend/build/index.html'));
+    });
+}
+else {
+    app.get('/', (req, res) => {
+        res.send('api runnning');
+    });
+}
 const PORT = process.env.PORT || 3000;
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, mongoose_1.connect)(process.env.MONGO_URI || "");
         app.listen(PORT, () => {
-            console.log("Server started on port 3000");
+            console.log(`Server started on port ${PORT}`);
         });
     }
     catch (error) {
