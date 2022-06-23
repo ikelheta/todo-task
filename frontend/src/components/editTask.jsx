@@ -36,14 +36,14 @@ const EditTask = (props) => {
 
     const data = { title, description, priority, status, startDate, endDate }
     if (!props.editMode) {
-      Axios.post('https://bluedevolopment-task.herokuapp.com:5000/task/add', data).then((res) => {
+      Axios.post('/task/add', data).then((res) => {
         console.log(res.data)
       }).catch((e) => {
         alert('some thing went wrong in add')
 
       })
     } else {
-      Axios.put(`https://bluedevolopment-task.herokuapp.com:5000/task/update/${props.id}`, data).then((res) => {
+      Axios.put(`/task/update/${props.id}`, data).then((res) => {
         console.log(res.data);
       }).catch((e) => {
         alert('some thing went wrong in edit')
@@ -58,7 +58,7 @@ const EditTask = (props) => {
     console.log(props);
     if (props.editMode) {
       console.log("object");
-      Axios.get(`https://bluedevolopment-task.herokuapp.com:5000/task/find/${props.id}`).then((res) => {
+      Axios.get(`/task/find/${props.id}`).then((res) => {
         console.log(res.data);
         const { title, description, endDate, startDate, priority, status } = res.data
         setDescription(description)

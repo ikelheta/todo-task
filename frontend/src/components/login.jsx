@@ -26,7 +26,7 @@ const Login = ({ handleChange }) => {
 
       e.preventDefault();
       const data = { email, password }
-      Axios.post('https://bluedevolopment-task.herokuapp.com:5000/user/login', data)
+      Axios.post('/user/login', data)
         .then((res) => {
           console.log(res);
           if (res.status === 200) {
@@ -54,7 +54,7 @@ const Login = ({ handleChange }) => {
     console.log('reset');
     if (email) {
       e.preventDefault();
-      Axios.post('https://bluedevolopment-task.herokuapp.com:5000/reset/user', { email }).then((res) => {
+      Axios.post('/reset/user', { email }).then((res) => {
         console.log(res);
         if (res.status === 200) {
           alert('reset link sent to you')
