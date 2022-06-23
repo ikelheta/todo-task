@@ -6,7 +6,7 @@ import Axios from "axios"
 const ViewAll = () => {
      const [tasks, setTasks] = useState([])
      useEffect(() => {
-          Axios.get('/task/findall').then((res) => {
+          Axios.get('http://localhost:8080/task/findall').then((res) => {
 
                if (res.status === 200) {
                     setTasks(res.data)

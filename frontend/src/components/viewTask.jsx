@@ -29,7 +29,7 @@ export default function ViewTask(props) {
 
   useEffect(() => {
     if (params.id) {
-      Axios.get(`/task/find/${params.id}`).then((res) => {
+      Axios.get(`http://localhost:8080/task/find/${params.id}`).then((res) => {
         console.log(res);
         if (res.status === 200) {
           setTask(res.data)
@@ -46,7 +46,7 @@ export default function ViewTask(props) {
   }, [])
 
   const handleDelete = () => {
-    Axios.delete(`/task/${props.task._id || params.id}`).then((res) => {
+    Axios.delete(`http://localhost:8080/task/${props.task._id || params.id}`).then((res) => {
       console.log(res.data)
       if (res.status === 200) {
         alert('task deleted')

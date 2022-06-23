@@ -28,137 +28,157 @@ app.use(express_1.default.json());
 app.use(cors());
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 app.post("/user/register", (req, res) => {
-    const p = user_1.UserController.addUser(req.body).pipe((0, rxjs_1.take)(1)).subscribe({
+    const p = user_1.UserController.addUser(req.body)
+        .pipe((0, rxjs_1.take)(1))
+        .subscribe({
         next(r) {
             res.send(r);
         },
         error(e) {
             console.log(e);
             res.sendStatus(500);
-        }
+        },
     });
 });
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 app.post("/user/login", (req, res) => {
     console.log(req.body);
-    const p = login_1.LoginController.userLogin(req.body).pipe((0, rxjs_1.take)(1)).subscribe({
+    const p = login_1.LoginController.userLogin(req.body)
+        .pipe((0, rxjs_1.take)(1))
+        .subscribe({
         next(r) {
             res.send(r);
         },
         error(e) {
             console.log(e);
             res.sendStatus(e);
-        }
+        },
     });
 });
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
-app.post('/confirmation/:token', authontication_1.verifyToken, (req, res) => {
-    const p = user_1.UserController.verfieEmail(req.user).pipe((0, rxjs_1.take)(1)).subscribe({
+app.post("/confirmation/:token", authontication_1.verifyToken, (req, res) => {
+    const p = user_1.UserController.verfieEmail(req.user)
+        .pipe((0, rxjs_1.take)(1))
+        .subscribe({
         next(r) {
             res.send(r);
         },
         error(e) {
             console.log(e);
             res.sendStatus(500);
-        }
+        },
     });
 });
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
-app.post('/reset/user', (req, res) => {
-    const p = user_1.UserController.sendTokenTouser(req.body.email).pipe((0, rxjs_1.take)(1)).subscribe({
+app.post("/reset/user", (req, res) => {
+    const p = user_1.UserController.sendTokenTouser(req.body.email)
+        .pipe((0, rxjs_1.take)(1))
+        .subscribe({
         next(r) {
             res.send(r);
         },
         error(e) {
             console.log(e);
             res.sendStatus(500);
-        }
+        },
     });
 });
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
-app.post('/reset/:token', authontication_1.verifyToken, (req, res) => {
-    const p = user_1.UserController.resetPassword(req.body.password, req.user).pipe((0, rxjs_1.take)(1)).subscribe({
+app.post("/reset/:token", authontication_1.verifyToken, (req, res) => {
+    const p = user_1.UserController.resetPassword(req.body.password, req.user)
+        .pipe((0, rxjs_1.take)(1))
+        .subscribe({
         next(r) {
             res.send(r);
         },
         error(e) {
             console.log(e);
             res.sendStatus(500);
-        }
+        },
     });
 });
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 // ---------------------------------------------------------LogIn----------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
-app.post('/task/add', authontication_1.isTokenValid, (req, res) => {
+app.post("/task/add", authontication_1.isTokenValid, (req, res) => {
     const task = new task_2.Task(Object.assign(Object.assign({}, req.body), { createdBy: req.user.id }));
-    const p = task_1.TaskController.addTask(task).pipe((0, rxjs_1.take)(1)).subscribe({
+    const p = task_1.TaskController.addTask(task)
+        .pipe((0, rxjs_1.take)(1))
+        .subscribe({
         next(r) {
             res.send(r);
         },
         error(e) {
             console.log(e);
             res.sendStatus(500);
-        }
+        },
     });
 });
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
-app.put('/task/update/:id', authontication_1.isTokenValid, (req, res) => {
-    const p = task_1.TaskController.updateTask(req.params.id, req.body, req.user.id).pipe((0, rxjs_1.take)(1)).subscribe({
+app.put("/task/update/:id", authontication_1.isTokenValid, (req, res) => {
+    const p = task_1.TaskController.updateTask(req.params.id, req.body, req.user.id)
+        .pipe((0, rxjs_1.take)(1))
+        .subscribe({
         next(r) {
             res.send(r);
         },
         error(e) {
             res.sendStatus(500);
-        }
+        },
     });
 });
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
-app.get('/task/find/:id', authontication_1.isTokenValid, (req, res) => {
-    const p = task_1.TaskController.getSingleTask(req.params.id, req.user.id).pipe((0, rxjs_1.take)(1)).subscribe({
+app.get("/task/find/:id", authontication_1.isTokenValid, (req, res) => {
+    const p = task_1.TaskController.getSingleTask(req.params.id, req.user.id)
+        .pipe((0, rxjs_1.take)(1))
+        .subscribe({
         next(r) {
             res.send(r);
         },
         error(e) {
             res.sendStatus(500);
-        }
+        },
     });
 });
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
-app.get('/task/findall', authontication_1.isTokenValid, (req, res) => {
-    const p = task_1.TaskController.getAllTaskForUser(req.user.id).pipe((0, rxjs_1.take)(1)).subscribe({
+app.get("/task/findall", authontication_1.isTokenValid, (req, res) => {
+    const p = task_1.TaskController.getAllTaskForUser(req.user.id)
+        .pipe((0, rxjs_1.take)(1))
+        .subscribe({
         next(r) {
             res.send(r);
         },
         error(e) {
             res.sendStatus(500);
-        }
+        },
     });
 });
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
-app.delete('/task/:id', authontication_1.isTokenValid, (req, res) => {
-    const p = task_1.TaskController.deleteTask(req.params.id, req.user.id).pipe((0, rxjs_1.take)(1)).subscribe({
+app.delete("/task/:id", authontication_1.isTokenValid, (req, res) => {
+    const p = task_1.TaskController.deleteTask(req.params.id, req.user.id)
+        .pipe((0, rxjs_1.take)(1))
+        .subscribe({
         next(r) {
             res.send(r);
         },
         error(e) {
             res.sendStatus(500);
-        }
+        },
     });
 });
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 if (process.env.NODE_ENV === "production") {
     let reqFolder = path_1.default.join("../" + __dirname);
-    app.use(express_1.default.static(path_1.default.join(__dirname, '../frontend/build')));
-    app.get('*', (req, res) => {
-        const index = path_1.default.join(__dirname, "..", 'frontend', 'build', 'index.html');
+    app.use(express_1.default.static(path_1.default.join(__dirname, "../frontend/build")));
+    app.get("*", (req, res) => {
+        const index = path_1.default.join(__dirname, "..", "frontend", "build", "index.html");
         console.log(index);
         res.sendFile(index);
     });
 }
 else {
-    app.get('/', (req, res) => {
-        res.send('api runnning');
+    app.get("/", (req, res) => {
+        res.send("api runnning");
     });
 }
 const PORT = process.env.PORT || 8080;

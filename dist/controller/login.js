@@ -14,7 +14,7 @@ class LoginController {
     static userLogin(body) {
         const { email, password } = body;
         let user;
-        return (0, rxjs_1.of)(true).pipe((0, operators_1.mergeMap)(() => (0, rxjs_1.from)(user_1.default.findOne({ email }))), (0, rxjs_1.tap)((t) => user = t), (0, operators_1.mergeMap)((m) => (0, rxjs_1.from)(bcrypt_1.default.compare(password, m.password))), (0, operators_1.mergeMap)((m) => {
+        return (0, rxjs_1.of)(true).pipe((0, operators_1.mergeMap)(() => (0, rxjs_1.from)(user_1.default.findOne({ email }))), (0, rxjs_1.tap)((t) => user = t), (0, rxjs_1.tap)((m) => console.log(m)), (0, operators_1.mergeMap)((m) => (0, rxjs_1.from)(bcrypt_1.default.compare(password, m.password))), (0, operators_1.mergeMap)((m) => {
             return user.verified ? (0, rxjs_1.of)(m) : (0, rxjs_1.throwError)(() => 401);
         }), (0, operators_1.mergeMap)((m) => m ? (0, rxjs_1.of)({ token: (0, authontication_1.createUserToken)(Object.assign({}, user)), id: user._id }) : (0, rxjs_1.throwError)(() => 400)));
     }

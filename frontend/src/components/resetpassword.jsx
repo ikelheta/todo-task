@@ -27,7 +27,7 @@ const Reset = () => {
   const handleSubmit = (e) => {
     if (password) {
       e.preventDefault()
-      Axios.post(`/reset/${params.token}`, { password }).then((res) => {
+      Axios.post(`http://localhost:8080/reset/${params.token}`, { password }).then((res) => {
         if (res.status === 200) {
           console.log(res.data);
           localStorage.setItem("token", params.token)

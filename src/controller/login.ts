@@ -14,6 +14,7 @@ export class LoginController {
     return of(true).pipe(
       mergeMap(() => from(UserSchema.findOne({ email }))),
       tap((t) => user = t),
+      tap((m)=>  console.log(m)),
       mergeMap((m: any) => from(bcrypt.compare(password, m.password))),
       mergeMap((m: any) => {
         return user.verified ? of(m) : throwError(() => 401)
