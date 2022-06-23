@@ -164,9 +164,10 @@ else {
 const PORT = process.env.PORT || 8080;
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        yield (0, mongoose_1.connect)(process.env.MONGO_URI || "CONNECTED TO DB");
-        app.listen(PORT, () => {
-            console.log(`Server started on port ${PORT}`);
+        yield (0, mongoose_1.connect)(process.env.MONGO_URI || "", () => {
+            app.listen(PORT, () => {
+                console.log(`Server started on port ${PORT} and connected succesfully`);
+            });
         });
     }
     catch (error) {
