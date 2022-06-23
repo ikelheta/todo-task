@@ -191,7 +191,7 @@ if(process.env.NODE_ENV === "production"){
 }
 
 
-const PORT = process.env.PORT || 3000
+const PORT = 8080
 
 const start = async (): Promise<void> => {
   try {

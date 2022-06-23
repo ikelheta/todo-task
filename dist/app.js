@@ -161,7 +161,7 @@ else {
         res.send('api runnning');
     });
 }
-const PORT = process.env.PORT || 3000;
+const PORT = 8080;
 const start = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield (0, mongoose_1.connect)(process.env.MONGO_URI || "");
