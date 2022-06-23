@@ -40,6 +40,7 @@ app.post("/user/register", (req, res) => {
 });
 //--------------------------------------------------------------------------------------------------------------------------------------------------------
 app.post("/user/login", (req, res) => {
+    console.log(req.body);
     const p = login_1.LoginController.userLogin(req.body).pipe((0, rxjs_1.take)(1)).subscribe({
         next(r) {
             res.send(r);
