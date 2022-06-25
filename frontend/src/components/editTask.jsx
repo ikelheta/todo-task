@@ -36,12 +36,15 @@ const EditTask = (props) => {
 
     const data = { title, description, priority, status, startDate, endDate }
     if (!props.editMode) {
-      Axios.post('http://localhost:8080/task/add', data).then((res) => {
+      if(title && description && priority && status && startDate && endDate){
+         Axios.post('http://localhost:8080/task/add', data).then((res) => {
         console.log(res.data)
       }).catch((e) => {
         alert('some thing went wrong in add')
 
       })
+      }
+     
     } else {
       Axios.put(`http://localhost:8080/task/update/${props.id}`, data).then((res) => {
         console.log(res.data);
